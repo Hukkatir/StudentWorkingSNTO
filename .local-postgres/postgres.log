@@ -1,0 +1,31 @@
+2026-04-15 19:15:57.495 MSK [4632] LOG:  starting PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35222, 64-bit
+2026-04-15 19:15:57.501 MSK [4632] LOG:  listening on IPv6 address "::1", port 5433
+2026-04-15 19:15:57.501 MSK [4632] LOG:  listening on IPv4 address "127.0.0.1", port 5433
+2026-04-15 19:15:57.564 MSK [6916] LOG:  database system was interrupted; last known up at 2026-04-15 19:14:36 MSK
+2026-04-15 19:15:57.836 MSK [6916] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-04-15 19:15:57.841 MSK [6916] LOG:  redo starts at 0/1C7FD80
+2026-04-15 19:15:57.843 MSK [6916] LOG:  invalid record length at 0/1C80148: expected at least 24, got 0
+2026-04-15 19:15:57.843 MSK [6916] LOG:  redo done at 0/1C80110 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-04-15 19:15:57.848 MSK [16440] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-04-15 19:15:57.858 MSK [16440] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.002 s, total=0.012 s; sync files=3, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=1 kB; lsn=0/1C80148, redo lsn=0/1C80148
+2026-04-15 19:15:57.867 MSK [4632] LOG:  database system is ready to accept connections
+2026-04-15 19:17:39.867 MSK [16704] LOG:  starting PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35222, 64-bit
+2026-04-15 19:17:39.872 MSK [16704] LOG:  listening on IPv6 address "::1", port 5433
+2026-04-15 19:17:39.872 MSK [16704] LOG:  listening on IPv4 address "127.0.0.1", port 5433
+2026-04-15 19:17:39.965 MSK [7976] LOG:  database system was interrupted; last known up at 2026-04-15 19:15:57 MSK
+2026-04-15 19:17:40.225 MSK [7976] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-04-15 19:17:40.230 MSK [7976] LOG:  invalid record length at 0/1C801C0: expected at least 24, got 0
+2026-04-15 19:17:40.230 MSK [7976] LOG:  redo is not required
+2026-04-15 19:17:40.234 MSK [26384] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-04-15 19:17:40.246 MSK [26384] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.002 s, total=0.014 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1C801C0, redo lsn=0/1C801C0
+2026-04-15 19:17:40.257 MSK [16704] LOG:  database system is ready to accept connections
+2026-04-15 19:18:21.941 MSK [26848] LOG:  starting PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35222, 64-bit
+2026-04-15 19:18:21.947 MSK [26848] LOG:  listening on IPv6 address "::1", port 5433
+2026-04-15 19:18:21.947 MSK [26848] LOG:  listening on IPv4 address "127.0.0.1", port 5433
+2026-04-15 19:18:22.033 MSK [29680] LOG:  database system was interrupted; last known up at 2026-04-15 19:17:40 MSK
+2026-04-15 19:18:22.290 MSK [29680] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-04-15 19:18:22.295 MSK [29680] LOG:  invalid record length at 0/1C80238: expected at least 24, got 0
+2026-04-15 19:18:22.295 MSK [29680] LOG:  redo is not required
+2026-04-15 19:18:22.303 MSK [22632] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-04-15 19:18:22.313 MSK [22632] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.001 s, total=0.012 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1C80238, redo lsn=0/1C80238
+2026-04-15 19:18:22.322 MSK [26848] LOG:  database system is ready to accept connections
