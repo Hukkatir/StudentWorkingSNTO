@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
-    "start": "prisma migrate deploy && next start",
+    "start": "node scripts/railway-start.mjs",
     "dev:app": "next dev --webpack",
     "build:app": "next build --webpack",
     "start:app": "next start",
@@ -72,7 +72,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Hukkatir/StudentWorkingSNTO/issues"
   },
