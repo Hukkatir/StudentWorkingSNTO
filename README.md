@@ -52,10 +52,10 @@ copy .env.example .env
 docker compose up -d
 ```
 
-4. Примените Prisma schema:
+4. Примените Prisma migration:
 
 ```bash
-npm run db:push
+npm run db:migrate:deploy
 ```
 
 5. Заполните базу демонстрационными данными:
@@ -75,6 +75,21 @@ npm run dev
 ```text
 http://localhost:3000
 ```
+
+## Railway
+
+Проект готов к Node.js deployment на Railway:
+
+1. создайте проект и сервис PostgreSQL;
+2. задайте `DATABASE_URL`, `NEXTAUTH_URL`, `NEXTAUTH_SECRET`;
+3. задеплойте приложение;
+4. после деплоя при необходимости загрузите данные:
+
+```bash
+npm run db:seed
+```
+
+`npm start` уже применяет миграции автоматически. Если нужно перенести не демо-данные, а текущее локальное состояние, загрузите SQL-дамп в Railway Postgres вместо запуска сида.
 
 ## Demo-аккаунты
 
@@ -259,7 +274,7 @@ npm run dev
 npm run lint
 npm run typecheck
 npm run build
-npm run db:push
+npm run db:migrate:deploy
 npm run db:seed
 npm run db:studio
 ```

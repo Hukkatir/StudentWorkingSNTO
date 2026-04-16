@@ -2,21 +2,26 @@
   "name": "student-working-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "node ../scripts/run-studentworking-with-db.mjs dev",
-    "build": "node ../scripts/run-studentworking-with-db.mjs build",
-    "start": "node ../scripts/run-studentworking-with-db.mjs build && node ../scripts/run-studentworking-with-db.mjs start",
-    "dev:app": "next dev",
-    "build:app": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "prisma migrate deploy && next start",
+    "dev:app": "next dev --webpack",
+    "build:app": "next build --webpack",
     "start:app": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "db:push": "prisma db push --skip-generate",
     "db:generate": "prisma generate",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:status": "prisma migrate status",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
-    "db:prepare-local": "node ../scripts/run-studentworking-with-db.mjs prepare",
     "postinstall": "prisma generate"
+  },
+  "engines": {
+    "node": ">=20.9.0"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
@@ -57,5 +62,19 @@
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
-  }
+  },
+  "description": "MVP-веб-приложение для учета посещаемости, дежурств, штрафов, бонусов и статистики в студенческих группах.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hukkatir/StudentWorkingSNTO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Hukkatir/StudentWorkingSNTO/issues"
+  },
+  "homepage": "https://github.com/Hukkatir/StudentWorkingSNTO#readme"
 }
