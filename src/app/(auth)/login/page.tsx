@@ -1,8 +1,8 @@
 import { ShieldCheck, Sparkles, Users } from "lucide-react";
 
 import { LoginForm } from "@/components/auth/login-form";
+import { BrandLogo } from "@/components/shared/brand-logo";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
-import { APP_NAME } from "@/lib/branding";
 
 const loginHighlights = [
   {
@@ -35,10 +35,14 @@ export default function LoginPage() {
         <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.08fr)_430px] lg:gap-16">
           <section className="flex flex-col justify-center gap-10 py-6 lg:py-12">
             <div className="max-w-3xl">
-              <span className="inline-flex items-center rounded-full border border-black/8 bg-white/72 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-teal-800 shadow-sm shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-white/[0.04] dark:text-teal-200 dark:shadow-black/20">
-                {APP_NAME}
-              </span>
-              <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
+              <BrandLogo
+                variant="stacked"
+                className="items-start text-left"
+                markClassName="size-24 sm:size-28"
+                nameClassName="text-4xl sm:text-5xl"
+                subtitleClassName="text-xs sm:text-sm"
+              />
+              <h1 className="mt-8 max-w-4xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
                 Контроль группы без бумажной рутины.
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg dark:text-slate-300">
@@ -83,9 +87,12 @@ export default function LoginPage() {
               <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-teal-500/75 to-transparent" />
               <div className="flex flex-col gap-8">
                 <div>
-                  <span className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700 dark:text-teal-300">
-                    {APP_NAME}
-                  </span>
+                  <BrandLogo
+                    variant="horizontal"
+                    subtitle={null}
+                    markClassName="size-11"
+                    nameClassName="text-xl"
+                  />
                   <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50">
                     Вход в кабинет
                   </h2>

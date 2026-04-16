@@ -32,7 +32,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { APP_MONOGRAM, APP_NAME } from "@/lib/branding";
+import { APP_SHORT_TAGLINE } from "@/lib/branding";
+import { BrandLogo } from "@/components/shared/brand-logo";
 import { ROLE_LABELS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -90,6 +91,10 @@ export function AppShell({ user, children }: AppShellProps) {
   const pathname = usePathname();
   const navItems = navMap[user.role];
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const activeHref =
+    navItems
+      .filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))
+      .sort((left, right) => right.href.length - left.href.length)[0]?.href ?? null;
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(15,118,110,0.08),transparent_40%),linear-gradient(180deg,#f7f8f6_0%,#ffffff_28%,#f6f8fa_100%)] dark:bg-[radial-gradient(circle_at_top,_rgba(45,212,191,0.12),transparent_35%),linear-gradient(180deg,#13181c_0%,#161b20_40%,#101418_100%)]">
@@ -115,12 +120,14 @@ export function AppShell({ user, children }: AppShellProps) {
                   isSidebarCollapsed && "items-center text-center",
                 )}
               >
-                <span
-                  className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700 dark:text-teal-300"
-                  title={APP_NAME}
-                >
-                  {isSidebarCollapsed ? APP_MONOGRAM : APP_NAME}
-                </span>
+                <BrandLogo
+                  variant={isSidebarCollapsed ? "mark" : "horizontal"}
+                  subtitle={isSidebarCollapsed ? null : APP_SHORT_TAGLINE}
+                  className={cn(isSidebarCollapsed && "items-center")}
+                  markClassName={isSidebarCollapsed ? "size-11" : "size-12"}
+                  nameClassName={isSidebarCollapsed ? undefined : "text-xl"}
+                  subtitleClassName={isSidebarCollapsed ? undefined : "text-[9px]"}
+                />
                 {!isSidebarCollapsed ? (
                   <>
                     <h2 className="text-2xl font-semibold tracking-tight">
@@ -153,13 +160,14 @@ export function AppShell({ user, children }: AppShellProps) {
             <nav className="flex flex-col gap-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const isActive = activeHref === item.href;
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     aria-label={item.label}
+                    aria-current={isActive ? "page" : undefined}
                     title={item.label}
                     className={cn(
                       "flex items-center rounded-2xl py-3 text-sm font-medium transition-colors",
@@ -231,12 +239,13 @@ export function AppShell({ user, children }: AppShellProps) {
             <div className="grid grid-cols-4 gap-2">
               {navItems.slice(0, 4).map((item) => {
                 const Icon = item.icon;
-                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const isActive = activeHref === item.href;
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
+                    aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[11px] font-medium",
                       isActive
