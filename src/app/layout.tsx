@@ -6,6 +6,7 @@ import { AppSessionProvider } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { getCurrentSession } from "@/lib/auth/session";
+import { APP_NAME } from "@/lib/branding";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -20,10 +21,10 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Студенческий контроль",
+  title: APP_NAME,
   description: "Учет посещаемости, дежурств и баллов для студенческих групп.",
   manifest: "/manifest.webmanifest",
-  applicationName: "Студенческий контроль",
+  applicationName: APP_NAME,
 };
 
 export default async function RootLayout({

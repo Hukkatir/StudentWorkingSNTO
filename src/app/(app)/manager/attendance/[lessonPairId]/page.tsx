@@ -15,11 +15,7 @@ export default async function AttendancePairPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader
-        eyebrow="attendance"
-        title="Быстрая отметка пары"
-        description="Крупные переключатели и минимум лишних полей для работы с телефона."
-      />
+      <PageHeader eyebrow="attendance" title="Быстрая отметка пары" />
       <AttendanceEditor
         lessonPair={data.lessonPair}
         reasons={data.reasons}

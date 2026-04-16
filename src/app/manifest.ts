@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { APP_NAME } from "@/lib/branding";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Студенческий контроль",
-    short_name: "Студконтроль",
+    name: APP_NAME,
+    short_name: APP_NAME,
     description: "Учет посещаемости и дежурств для студенческих групп.",
     start_url: "/",
     display: "standalone",

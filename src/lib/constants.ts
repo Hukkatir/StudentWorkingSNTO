@@ -13,7 +13,7 @@ import type {
 export const ROLE_LABELS: Record<RoleCode, string> = {
   ADMIN: "Администратор",
   CURATOR: "Куратор",
-  GROUP_MANAGER: "Менеджер группы",
+  GROUP_MANAGER: "Староста",
   TEACHER: "Преподаватель",
   STUDENT: "Студент",
 };

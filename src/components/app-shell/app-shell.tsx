@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import {
   BarChart3,
-  BookOpenCheck,
   CalendarDays,
   ClipboardList,
   Home,
@@ -33,6 +32,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { APP_MONOGRAM, APP_NAME } from "@/lib/branding";
 import { ROLE_LABELS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -52,8 +52,6 @@ type NavItem = {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
 };
-
-const APP_NAME = "Студенческий контроль";
 
 const navMap: Record<Role, NavItem[]> = {
   ADMIN: [
@@ -98,7 +96,7 @@ export function AppShell({ user, children }: AppShellProps) {
       <div className="flex min-h-screen w-full flex-col md:flex-row">
         <aside
           className={cn(
-            "hidden border-r border-border/70 bg-background/80 backdrop-blur md:flex md:min-h-screen md:flex-col md:justify-between md:gap-8 md:transition-[width,padding] md:duration-300",
+            "hidden border-r border-border/70 bg-background/80 backdrop-blur md:flex md:min-h-screen md:flex-col md:gap-8 md:transition-[width,padding] md:duration-300",
             isSidebarCollapsed ? "md:w-24 md:px-3 md:py-4" : "md:w-72 md:p-6",
           )}
         >
@@ -121,12 +119,12 @@ export function AppShell({ user, children }: AppShellProps) {
                   className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700 dark:text-teal-300"
                   title={APP_NAME}
                 >
-                  {isSidebarCollapsed ? "СК" : APP_NAME}
+                  {isSidebarCollapsed ? APP_MONOGRAM : APP_NAME}
                 </span>
                 {!isSidebarCollapsed ? (
                   <>
                     <h2 className="text-2xl font-semibold tracking-tight">
-                      Учебный контроль
+                      Кабинет группы
                     </h2>
                     <p className="text-sm text-muted-foreground">
                       Посещаемость, дежурства, бронь и статистика в одном кабинете.
@@ -180,17 +178,6 @@ export function AppShell({ user, children }: AppShellProps) {
               })}
             </nav>
           </div>
-
-          <div
-            className={cn(
-              "rounded-2xl border border-border/60 bg-background/70 p-3 text-xs text-muted-foreground",
-              isSidebarCollapsed && "px-2 text-center",
-            )}
-          >
-            {isSidebarCollapsed
-              ? "Панель"
-              : "Левую панель можно свернуть и развернуть в любой момент."}
-          </div>
         </aside>
 
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
@@ -211,7 +198,7 @@ export function AppShell({ user, children }: AppShellProps) {
                       "rounded-full",
                     )}
                   >
-                    <BookOpenCheck />
+                    <UserRound />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-64">
                     <DropdownMenuGroup>

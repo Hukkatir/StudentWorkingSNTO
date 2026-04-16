@@ -3,8 +3,8 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
-import { db } from "@/lib/db";
 import { ROLE_LABELS } from "@/lib/constants";
+import { db } from "@/lib/db";
 
 const loginSchema = z.object({
   identifier: z.string().min(2),
@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        identifier: { label: "Email или логин", type: "text" },
+        identifier: { label: "Почта или логин", type: "text" },
         password: { label: "Пароль", type: "password" },
       },
       async authorize(credentials) {

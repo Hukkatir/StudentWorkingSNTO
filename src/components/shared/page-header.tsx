@@ -17,7 +17,7 @@ const EYEBROW_LABELS: Record<string, string> = {
   analytics: "аналитика",
   student: "студент",
   teacher: "преподаватель",
-  "group manager": "менеджер группы",
+  "group manager": "староста",
 };
 
 export function PageHeader({
