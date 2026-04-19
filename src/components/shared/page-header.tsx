@@ -31,10 +31,10 @@ export function PageHeader({
 
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div className="flex max-w-2xl flex-col gap-2">
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+        <div className="flex max-w-3xl flex-col gap-2">
           {eyebrowLabel ? (
-            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">
+            <span className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
               {eyebrowLabel}
             </span>
           ) : null}
@@ -45,7 +45,9 @@ export function PageHeader({
             </p>
           ) : null}
         </div>
-        {actions ? <div className="flex items-center gap-2">{actions}</div> : null}
+        {actions ? (
+          <div className="flex flex-wrap items-center gap-2 pb-1 xl:justify-end">{actions}</div>
+        ) : null}
       </div>
     </div>
   );

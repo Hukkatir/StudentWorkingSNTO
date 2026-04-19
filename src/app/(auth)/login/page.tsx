@@ -1,90 +1,187 @@
-import { ShieldCheck, Sparkles, Users } from "lucide-react";
+import {
+  BookOpen,
+  CalendarDays,
+  ChartColumnBig,
+  GraduationCap,
+  ShieldCheck,
+  Sparkles,
+  Users,
+} from "lucide-react";
 
 import { LoginForm } from "@/components/auth/login-form";
 import { BrandLogo } from "@/components/shared/brand-logo";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 
-const loginHighlights = [
+const roleCards = [
   {
-    title: "Для старосты",
-    description: "Быстрая отметка пары, дежурства и контроль статусов без бумажного журнала.",
-    icon: ShieldCheck,
+    title: "Староста",
+    description: "Посещаемость, дежурства и быстрые решения по группе.",
+    icon: Users,
   },
   {
-    title: "Для преподавателя",
-    description: "Оценка дежурств и прозрачная история решений в одном рабочем контуре.",
+    title: "Преподаватель",
+    description: "Оценка дежурств и история действий без лишних переходов.",
+    icon: GraduationCap,
+  },
+  {
+    title: "Студент",
+    description: "Расписание, бронь и личный статус в одном кабинете.",
+    icon: BookOpen,
+  },
+] as const;
+
+const workflowCards = [
+  {
+    title: "Посещаемость",
+    note: "По дню и по паре",
+    icon: CalendarDays,
+  },
+  {
+    title: "Дежурства",
+    note: "Автоподбор и ручной выбор",
     icon: Sparkles,
   },
   {
-    title: "Для студента",
-    description: "Бронь, отсутствие и личная статистика собираются в одном кабинете.",
-    icon: Users,
+    title: "Статистика",
+    note: "Баланс, инциденты, динамика",
+    icon: ChartColumnBig,
   },
 ] as const;
 
 export default function LoginPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,#f5f7f4_0%,#eef7f4_42%,#f8faf9_100%)] text-slate-950 dark:bg-[linear-gradient(180deg,#0d1317_0%,#11181d_40%,#0b1115_100%)] dark:text-slate-50">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(13,148,136,0.18),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(59,130,246,0.16),transparent_18%),radial-gradient(circle_at_50%_100%,rgba(15,118,110,0.12),transparent_28%)]" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42vw] border-l border-black/5 bg-white/30 lg:block dark:border-white/6 dark:bg-white/[0.02]" />
-      <div className="absolute top-4 right-4 z-20">
+    <div className="relative min-h-[100dvh] overflow-hidden bg-[linear-gradient(180deg,#f7fbfa_0%,#eef6f4_42%,#fbfcfc_100%)] text-slate-950 dark:bg-[linear-gradient(180deg,#0b1212_0%,#0e1717_48%,#091010_100%)] dark:text-slate-50">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(0,136,130,0.18),transparent_24%),radial-gradient(circle_at_74%_12%,rgba(20,56,122,0.10),transparent_18%),linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:auto,auto,36px_36px,36px_36px] dark:bg-[radial-gradient(circle_at_14%_18%,rgba(0,136,130,0.24),transparent_24%),radial-gradient(circle_at_74%_12%,rgba(122,167,255,0.10),transparent_18%),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)]" />
+      <div className="absolute right-4 top-4 z-30">
         <ThemeSwitcher />
       </div>
 
-      <main className="relative mx-auto flex min-h-screen w-full max-w-[1440px] items-center px-4 py-8 sm:px-6 lg:px-10">
-        <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.08fr)_430px] lg:gap-16">
-          <section className="flex flex-col justify-center gap-10 py-6 lg:py-12">
+      <main className="relative mx-auto grid min-h-[100dvh] w-full max-w-[1480px] items-center gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:px-10 lg:py-10">
+        <section className="flex min-w-0 justify-center">
+          <div className="flex w-full max-w-5xl flex-col gap-8">
             <div className="max-w-3xl">
-              <BrandLogo
-                variant="stacked"
-                className="items-start text-left"
-                markClassName="size-24 sm:size-28"
-                nameClassName="text-4xl sm:text-5xl"
-                subtitleClassName="text-xs sm:text-sm"
-              />
-              <h1 className="mt-8 max-w-4xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
-                Контроль группы без бумажной рутины.
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary shadow-sm backdrop-blur dark:bg-white/[0.05]">
+                <ShieldCheck className="size-4" />
+                Управление группой
+              </div>
+
+              <div className="mt-6">
+                <BrandLogo
+                  variant="horizontal"
+                  markClassName="size-18 sm:size-20"
+                  nameClassName="text-3xl sm:text-4xl"
+                  subtitleClassName="text-[11px] sm:text-xs"
+                />
+              </div>
+
+              <h1 className="mt-7 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+                Посещаемость, дежурства и статистика в одном месте.
               </h1>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg dark:text-slate-300">
-                Посещаемость, дежурства, бронирование и история решений собираются
-                в одном рабочем кабинете, понятном для старосты, преподавателя и студента.
+              <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg dark:text-slate-300">
+                Рабочее пространство для старосты, преподавателя и студента: от расписания на
+                неделю до контроля назначений и личного статуса.
               </p>
             </div>
 
-            <div className="grid max-w-2xl gap-4">
-              {loginHighlights.map((item) => {
-                const Icon = item.icon;
-
-                return (
-                  <div
-                    key={item.title}
-                    className="flex items-start gap-4 border-l border-teal-600/25 pl-4 dark:border-teal-400/25"
-                  >
-                    <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-2xl bg-white/70 text-teal-700 shadow-sm shadow-black/5 ring-1 ring-black/5 backdrop-blur dark:bg-white/[0.05] dark:text-teal-200 dark:ring-white/8">
-                      <Icon className="size-5" />
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1.05fr)_340px]">
+              <div className="rounded-[2.2rem] border border-black/10 bg-white/78 p-5 shadow-[0_32px_80px_-52px_rgba(15,23,42,0.36)] backdrop-blur-xl sm:p-6 dark:border-white/10 dark:bg-white/[0.04] dark:shadow-[0_32px_80px_-52px_rgba(0,0,0,0.78)]">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+                      Рабочий контур
                     </div>
-                    <div className="space-y-1">
-                      <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100">
-                        {item.title}
-                      </h2>
-                      <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
-                        {item.description}
-                      </p>
+                    <div className="mt-2 text-2xl font-semibold tracking-tight">
+                      Учебный день без бумажной рутины
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                  <div className="rounded-full border border-border/60 bg-background/80 px-4 py-2 text-sm text-muted-foreground">
+                    Спокойный ритм группы
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
-              <span className="h-px w-12 bg-slate-300 dark:bg-slate-700" />
-              Один вход для всех ролей внутри группы.
-            </div>
-          </section>
+                <div className="mt-5 grid gap-3 md:grid-cols-3">
+                  {workflowCards.map((item) => {
+                    const Icon = item.icon;
 
-          <aside className="lg:justify-self-end">
-            <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-white/78 p-6 shadow-[0_36px_90px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-950/76 dark:shadow-[0_36px_90px_-38px_rgba(0,0,0,0.75)]">
-              <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-teal-500/75 to-transparent" />
+                    return (
+                      <div
+                        key={item.title}
+                        className="rounded-[1.7rem] border border-border/60 bg-background/80 p-4"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <div className="text-sm font-semibold">{item.title}</div>
+                            <div className="mt-1 text-xs leading-5 text-muted-foreground">
+                              {item.note}
+                            </div>
+                          </div>
+                          <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                            <Icon className="size-5" />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-5 rounded-[1.9rem] border border-border/60 bg-background/80 p-4">
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {roleCards.map((item) => {
+                      const Icon = item.icon;
+
+                      return (
+                        <div key={item.title} className="flex items-start gap-3">
+                          <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                            <Icon className="size-5" />
+                          </div>
+                          <div className="space-y-1">
+                            <div className="text-sm font-semibold">{item.title}</div>
+                            <div className="text-xs leading-5 text-muted-foreground">
+                              {item.description}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-3">
+                <div className="rounded-[1.9rem] border border-black/10 bg-white/72 p-5 shadow-[0_20px_55px_-42px_rgba(15,23,42,0.36)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-[0_20px_55px_-42px_rgba(0,0,0,0.72)]">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+                    Что внутри
+                  </div>
+                  <div className="mt-3 space-y-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                    <p>Сводка по дню, история действий, управление расписанием и аналитика.</p>
+                    <p>Каждая роль видит только свой рабочий контекст и нужные инструменты.</p>
+                  </div>
+                </div>
+
+                <div className="rounded-[1.9rem] border border-black/10 bg-white/72 p-5 shadow-[0_20px_55px_-42px_rgba(15,23,42,0.36)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-[0_20px_55px_-42px_rgba(0,0,0,0.72)]">
+                  <div className="flex items-start gap-3">
+                    <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <ShieldCheck className="size-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold">Одна система для всей группы</div>
+                      <div className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                        Посещаемость, дежурства, бронь и показатели остаются в одном цифровом
+                        контуре.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside className="flex items-center justify-center">
+          <div className="relative w-full max-w-[420px]">
+            <div className="pointer-events-none absolute inset-6 rounded-[2.4rem] bg-primary/12 blur-3xl dark:bg-primary/18" />
+            <div className="relative overflow-hidden rounded-[2.2rem] border border-black/10 bg-white/86 p-6 shadow-[0_50px_100px_-52px_rgba(15,23,42,0.46)] backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-950/82 dark:shadow-[0_50px_100px_-52px_rgba(0,0,0,0.8)]">
+              <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-primary/80 to-transparent" />
               <div className="flex flex-col gap-8">
                 <div>
                   <BrandLogo
@@ -93,23 +190,18 @@ export default function LoginPage() {
                     markClassName="size-11"
                     nameClassName="text-xl"
                   />
-                  <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50">
-                    Вход в кабинет
-                  </h2>
+                  <h2 className="mt-5 text-3xl font-semibold tracking-tight">Вход в кабинет</h2>
                   <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                    Введите почту или логин и пароль, чтобы открыть кабинет по вашей роли.
+                    Введите почту или логин и пароль. После входа система откроет нужный рабочий
+                    раздел автоматически.
                   </p>
                 </div>
 
                 <LoginForm />
-
-                <p className="text-xs leading-5 text-slate-500 dark:text-slate-400">
-                  После входа система откроет ваш рабочий раздел автоматически.
-                </p>
               </div>
             </div>
-          </aside>
-        </div>
+          </div>
+        </aside>
       </main>
     </div>
   );

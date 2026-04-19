@@ -1,11 +1,21 @@
 import { DutyPlanner } from "@/components/duties/duty-planner";
+import { DateNavigator } from "@/components/shared/date-navigator";
 import { PageHeader } from "@/components/shared/page-header";
-import { requireRole } from "@/lib/auth/session";
 import { MANAGER_ROLES } from "@/lib/auth/permissions";
+import { requireRole } from "@/lib/auth/session";
+import { formatDayLabel, parseDateParam } from "@/lib/date";
 import { calculateDutyCandidates, getDutyPlanningData } from "@/modules/duties/service";
 import { getGroupStudents } from "@/modules/students/service";
 
-export default async function ManagerDutiesPage() {
+type ManagerDutiesPageProps = {
+  searchParams?: Promise<{
+    date?: string | string[];
+  }>;
+};
+
+export default async function ManagerDutiesPage({
+  searchParams,
+}: ManagerDutiesPageProps) {
   const session = await requireRole(MANAGER_ROLES);
   const groupId = session.user.primaryGroupId;
 
@@ -13,22 +23,28 @@ export default async function ManagerDutiesPage() {
     return null;
   }
 
+  const params = (await searchParams) ?? {};
+  const rawDate = typeof params.date === "string" ? params.date : undefined;
+  const selectedDate = parseDateParam(rawDate);
+
   const [planning, roster, candidates] = await Promise.all([
-    getDutyPlanningData(groupId),
+    getDutyPlanningData(groupId, selectedDate),
     getGroupStudents(groupId),
-    calculateDutyCandidates(groupId, new Date(), 2, "MODERATE", null),
+    calculateDutyCandidates(groupId, selectedDate, 2, "MODERATE", null),
   ]);
 
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
         eyebrow="duties"
-        title="Назначение дежурных"
-        description="Можно выбрать весь день или конкретную пару, увидеть объяснимый автоподбор и удалить ошибочно созданное назначение."
+        title={`Назначение дежурств на ${formatDayLabel(selectedDate)}`}
+        description="Выберите день, затем весь учебный день или конкретную пару, и система покажет подходящих кандидатов."
+        actions={<DateNavigator basePath="/manager/duties" currentDate={selectedDate} />}
       />
+
       <DutyPlanner
         groupId={groupId}
-        date={new Date().toISOString()}
+        date={selectedDate.toISOString()}
         complexities={planning.complexities.map((complexity) => ({
           code: complexity.code,
           label: complexity.label,

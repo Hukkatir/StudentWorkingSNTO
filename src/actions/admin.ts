@@ -3,8 +3,19 @@
 import { revalidatePath } from "next/cache";
 
 import { requireRole } from "@/lib/auth/session";
-import { previewScheduleImport, confirmScheduleImport } from "@/modules/schedule/service";
-import { updateSettings } from "@/modules/admin/service";
+import {
+  createGroup,
+  createStudent,
+  updateSettings,
+} from "@/modules/admin/service";
+import {
+  createGroupSchema,
+  createStudentSchema,
+} from "@/modules/admin/schemas";
+import {
+  confirmScheduleImport,
+  previewScheduleImport,
+} from "@/modules/schedule/service";
 
 export async function previewScheduleImportAction(formData: FormData) {
   const session = await requireRole(["ADMIN"]);
@@ -56,4 +67,38 @@ export async function updateSettingsAction(values: Record<string, boolean | numb
   revalidatePath("/admin/settings");
 
   return { success: true, message: "Настройки сохранены." };
+}
+
+export async function createGroupAction(values: unknown) {
+  const session = await requireRole(["ADMIN"]);
+  const parsed = createGroupSchema.parse(values);
+
+  const group = await createGroup(session.user.id, parsed);
+
+  revalidatePath("/admin");
+  revalidatePath("/admin/groups");
+  revalidatePath("/admin/students");
+
+  return {
+    success: true,
+    message: `Группа ${group.name} создана.`,
+    groupId: group.id,
+  };
+}
+
+export async function createStudentAction(values: unknown) {
+  const session = await requireRole(["ADMIN"]);
+  const parsed = createStudentSchema.parse(values);
+
+  const student = await createStudent(session.user.id, parsed);
+
+  revalidatePath("/admin");
+  revalidatePath("/admin/groups");
+  revalidatePath("/admin/students");
+
+  return {
+    success: true,
+    message: `Студент ${student.user.fullName} добавлен.`,
+    studentId: student.id,
+  };
 }

@@ -1,27 +1,407 @@
-2026-04-16 18:19:03.574 MSK [19080] LOG:  starting PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35222, 64-bit
-2026-04-16 18:19:03.582 MSK [19080] LOG:  listening on IPv6 address "::1", port 5433
-2026-04-16 18:19:03.585 MSK [19080] LOG:  listening on IPv4 address "127.0.0.1", port 5433
-2026-04-16 18:19:03.696 MSK [30940] LOG:  database system was interrupted; last known up at 2026-04-16 18:18:32 MSK
-2026-04-16 18:19:03.972 MSK [30940] LOG:  database system was not properly shut down; automatic recovery in progress
-2026-04-16 18:19:03.978 MSK [30940] LOG:  redo starts at 0/21400C0
-2026-04-16 18:19:03.979 MSK [30940] LOG:  invalid record length at 0/21430E0: expected at least 24, got 0
-2026-04-16 18:19:03.979 MSK [30940] LOG:  redo done at 0/2141318 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
-2026-04-16 18:19:03.985 MSK [19728] LOG:  checkpoint starting: end-of-recovery immediate wait
-2026-04-16 18:19:03.995 MSK [19728] LOG:  checkpoint complete: wrote 2 buffers (0.0%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.003 s, total=0.012 s; sync files=5, longest=0.001 s, average=0.001 s; distance=12 kB, estimate=12 kB; lsn=0/21430E0, redo lsn=0/21430E0
-2026-04-16 18:19:04.003 MSK [19080] LOG:  database system is ready to accept connections
-2026-04-16 18:23:30.276 MSK [29916] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+2026-04-19 21:47:21.174 MSK [30436] LOG:  starting PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35222, 64-bit
+2026-04-19 21:47:21.183 MSK [30436] LOG:  listening on IPv6 address "::1", port 5433
+2026-04-19 21:47:21.183 MSK [30436] LOG:  listening on IPv4 address "127.0.0.1", port 5433
+2026-04-19 21:47:21.261 MSK [11660] LOG:  database system was interrupted; last known up at 2026-04-19 21:46:46 MSK
+2026-04-19 21:47:21.565 MSK [11660] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-04-19 21:47:21.570 MSK [11660] LOG:  redo starts at 0/2145CD0
+2026-04-19 21:47:21.571 MSK [11660] LOG:  invalid record length at 0/21471F8: expected at least 24, got 0
+2026-04-19 21:47:21.572 MSK [11660] LOG:  redo done at 0/21471C0 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-04-19 21:47:21.578 MSK [3668] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-04-19 21:47:21.592 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.002 s, total=0.016 s; sync files=4, longest=0.001 s, average=0.001 s; distance=5 kB, estimate=5 kB; lsn=0/21471F8, redo lsn=0/21471F8
+2026-04-19 21:47:21.602 MSK [30436] LOG:  database system is ready to accept connections
+2026-04-19 21:52:21.603 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 21:52:21.746 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.113 s, sync=0.011 s, total=0.144 s; sync files=2, longest=0.009 s, average=0.006 s; distance=5 kB, estimate=5 kB; lsn=0/21488D8, redo lsn=0/2148880
+2026-04-19 21:57:21.761 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 21:57:21.903 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.110 s, sync=0.013 s, total=0.142 s; sync files=2, longest=0.011 s, average=0.007 s; distance=6 kB, estimate=6 kB; lsn=0/214A0D8, redo lsn=0/214A080
+2026-04-19 22:02:21.915 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 22:02:22.047 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.104 s, sync=0.013 s, total=0.133 s; sync files=2, longest=0.011 s, average=0.007 s; distance=6 kB, estimate=6 kB; lsn=0/214BAC8, redo lsn=0/214BA70
+2026-04-19 22:17:21.114 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 22:17:21.270 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.113 s, sync=0.004 s, total=0.157 s; sync files=1, longest=0.004 s, average=0.004 s; distance=6 kB, estimate=6 kB; lsn=0/214D490, redo lsn=0/214D438
+2026-04-19 22:17:43.894 MSK [33580] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
 	
-2026-04-16 18:23:30.276 MSK [22772] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+2026-04-19 22:17:43.896 MSK [31716] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
 	
-2026-04-16 18:23:30.277 MSK [3068] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+2026-04-19 22:17:43.897 MSK [1112] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
 	
-2026-04-16 18:23:30.277 MSK [31928] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+2026-04-19 22:17:43.901 MSK [8380] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
 	
-2026-04-16 18:23:30.280 MSK [6084] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+2026-04-19 22:17:43.902 MSK [12540] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
 	
-2026-04-16 18:23:30.280 MSK [24596] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+2026-04-19 22:17:43.903 MSK [19072] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
 	
-2026-04-16 18:23:30.280 MSK [27500] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+2026-04-19 22:17:43.902 MSK [24692] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
 	
-2026-04-16 18:24:03.990 MSK [19728] LOG:  checkpoint starting: time
-2026-04-16 18:24:04.119 MSK [19728] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.098 s, sync=0.012 s, total=0.130 s; sync files=2, longest=0.010 s, average=0.006 s; distance=5 kB, estimate=11 kB; lsn=0/2144660, redo lsn=0/2144608
+2026-04-19 22:17:43.902 MSK [17096] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:17:43.903 MSK [4996] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:17:43.897 MSK [19312] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:17:43.903 MSK [35776] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:20:56.815 MSK [29876] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.248 MSK [22208] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.249 MSK [19840] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.250 MSK [15168] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.259 MSK [7212] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.262 MSK [36636] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.265 MSK [32572] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.266 MSK [3660] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.266 MSK [22364] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.265 MSK [12232] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.266 MSK [25924] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:21:33.266 MSK [9908] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:27:21.298 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 22:27:21.449 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.120 s, sync=0.013 s, total=0.151 s; sync files=2, longest=0.010 s, average=0.007 s; distance=6 kB, estimate=6 kB; lsn=0/214EF78, redo lsn=0/214EF20
+2026-04-19 22:32:21.454 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 22:32:21.585 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.102 s, sync=0.011 s, total=0.132 s; sync files=2, longest=0.009 s, average=0.006 s; distance=6 kB, estimate=6 kB; lsn=0/2150B50, redo lsn=0/2150AF8
+2026-04-19 22:46:24.498 MSK [23948] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.498 MSK [8992] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.500 MSK [11736] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.503 MSK [33192] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.504 MSK [32824] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.505 MSK [14192] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.505 MSK [16360] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.500 MSK [30664] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.505 MSK [34520] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.499 MSK [13112] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.505 MSK [26944] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:46:24.504 MSK [20032] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.472 MSK [8828] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.472 MSK [4120] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.473 MSK [3404] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.474 MSK [24504] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.475 MSK [20240] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.477 MSK [12740] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.477 MSK [15188] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.474 MSK [24072] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.476 MSK [18860] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.477 MSK [33224] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.477 MSK [4972] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:49:40.475 MSK [32064] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.566 MSK [4488] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.567 MSK [21644] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.567 MSK [25840] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.567 MSK [8292] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.568 MSK [22864] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.567 MSK [13500] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.567 MSK [19832] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:11.567 MSK [21840] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.559 MSK [13096] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.561 MSK [20108] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.563 MSK [11496] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.563 MSK [5688] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.564 MSK [18956] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.564 MSK [35112] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.564 MSK [25520] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.563 MSK [24704] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.564 MSK [35180] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.563 MSK [32616] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.564 MSK [7412] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:52:46.564 MSK [11852] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 22:57:21.620 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 22:57:23.845 MSK [3668] LOG:  checkpoint complete: wrote 20 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=2.178 s, sync=0.022 s, total=2.225 s; sync files=21, longest=0.011 s, average=0.001 s; distance=28 kB, estimate=28 kB; lsn=0/2157DE8, redo lsn=0/2157D90
+2026-04-19 23:02:21.855 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 23:02:21.986 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.111 s, sync=0.003 s, total=0.132 s; sync files=2, longest=0.002 s, average=0.002 s; distance=7 kB, estimate=26 kB; lsn=0/2159B88, redo lsn=0/2159B30
+2026-04-19 23:07:21.991 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 23:07:22.120 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.102 s, sync=0.009 s, total=0.129 s; sync files=2, longest=0.009 s, average=0.005 s; distance=7 kB, estimate=24 kB; lsn=0/215BA08, redo lsn=0/215B9B0
+2026-04-19 23:17:09.949 MSK [14156] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [7424] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [14344] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [16160] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [11528] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [24572] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [8620] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [24484] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [25264] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.949 MSK [21052] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [10112] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:17:09.952 MSK [33036] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.607 MSK [24552] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.610 MSK [21444] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.608 MSK [20656] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.612 MSK [28420] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.610 MSK [31240] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.608 MSK [20720] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.611 MSK [24132] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.609 MSK [29176] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.608 MSK [31320] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.612 MSK [24508] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.609 MSK [9688] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:18:19.609 MSK [35116] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:27:41.419 MSK [11572] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:27:41.420 MSK [3048] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:27:41.420 MSK [32340] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:27:41.421 MSK [20288] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:27:41.420 MSK [35924] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:27:41.420 MSK [9240] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:27:41.421 MSK [31648] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.662 MSK [14416] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.662 MSK [4768] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.664 MSK [5716] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.665 MSK [17116] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.666 MSK [12368] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.666 MSK [6256] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.666 MSK [3720] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.664 MSK [30556] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.666 MSK [6004] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.663 MSK [28516] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.666 MSK [19632] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:28:09.666 MSK [13048] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:32:21.163 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 23:32:21.279 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.097 s, sync=0.010 s, total=0.117 s; sync files=2, longest=0.009 s, average=0.005 s; distance=7 kB, estimate=22 kB; lsn=0/215D9E8, redo lsn=0/215D990
+2026-04-19 23:37:21.285 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 23:37:21.418 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.103 s, sync=0.011 s, total=0.133 s; sync files=2, longest=0.009 s, average=0.006 s; distance=4 kB, estimate=21 kB; lsn=0/215EAF0, redo lsn=0/215EA98
+2026-04-19 23:46:50.938 MSK [32424] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.942 MSK [17876] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.943 MSK [24304] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.943 MSK [18720] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.944 MSK [20684] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.944 MSK [12212] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.945 MSK [23180] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.943 MSK [32616] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.944 MSK [7784] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.943 MSK [13388] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.944 MSK [18800] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:46:50.943 MSK [11080] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:53:19.996 MSK [27308] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:53:19.997 MSK [18324] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:53:20.011 MSK [6820] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:53:20.015 MSK [12904] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.583 MSK [10828] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.583 MSK [6196] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.585 MSK [15016] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.585 MSK [20496] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.585 MSK [15784] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.585 MSK [2076] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.585 MSK [14344] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:23.585 MSK [22308] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.880 MSK [20796] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.881 MSK [20380] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.881 MSK [2076] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.882 MSK [21152] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.882 MSK [2812] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.882 MSK [9552] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.881 MSK [8420] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.882 MSK [24340] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.882 MSK [30908] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.880 MSK [15016] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.881 MSK [15304] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:54:54.882 MSK [22308] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:57:14.990 MSK [24408] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:57:21.449 MSK [3668] LOG:  checkpoint starting: time
+2026-04-19 23:57:21.589 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.112 s, sync=0.014 s, total=0.141 s; sync files=2, longest=0.011 s, average=0.007 s; distance=4 kB, estimate=19 kB; lsn=0/215FCC8, redo lsn=0/215FC70
+2026-04-19 23:57:22.738 MSK [28564] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:57:22.738 MSK [14616] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:58:19.834 MSK [16860] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:58:23.745 MSK [34032] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:58:25.007 MSK [21248] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-19 23:58:26.257 MSK [4688] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:02:21.596 MSK [3668] LOG:  checkpoint starting: time
+2026-04-20 00:02:21.710 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.103 s, sync=0.005 s, total=0.115 s; sync files=2, longest=0.004 s, average=0.003 s; distance=4 kB, estimate=17 kB; lsn=0/2161080, redo lsn=0/2161028
+2026-04-20 00:07:16.013 MSK [14616] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.013 MSK [8884] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.013 MSK [21488] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.013 MSK [14096] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.013 MSK [29356] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.014 MSK [35216] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.014 MSK [36204] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.014 MSK [21884] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.014 MSK [30584] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.014 MSK [21852] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.014 MSK [17676] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:07:16.014 MSK [2916] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:14:56.176 MSK [1516] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:14:56.176 MSK [14312] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:14:56.176 MSK [32004] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:14:56.177 MSK [29592] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:14:56.176 MSK [30788] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:14:56.177 MSK [29176] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:14:56.176 MSK [36764] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [24972] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.472 MSK [17772] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [31056] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [35784] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [9716] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [13400] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [14216] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [12408] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [26064] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [26492] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [8676] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:15:27.471 MSK [20916] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-04-20 00:17:21.733 MSK [3668] LOG:  checkpoint starting: time
+2026-04-20 00:17:21.863 MSK [3668] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.112 s, sync=0.002 s, total=0.131 s; sync files=2, longest=0.001 s, average=0.001 s; distance=5 kB, estimate=16 kB; lsn=0/2162608, redo lsn=0/21625B0

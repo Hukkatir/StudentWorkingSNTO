@@ -1,47 +1,45 @@
+import { DateNavigator } from "@/components/shared/date-navigator";
 import { PageHeader } from "@/components/shared/page-header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { requireRole } from "@/lib/auth/session";
+import { WeeklyScheduleBoard } from "@/components/shared/weekly-schedule-board";
 import { MANAGER_ROLES } from "@/lib/auth/permissions";
-import { formatDayLabel, formatTimeRange } from "@/lib/date";
+import { requireRole } from "@/lib/auth/session";
+import { formatWeekRange, parseDateParam } from "@/lib/date";
 import { getWeeklySchedule } from "@/modules/groups/service";
 
-export default async function ManagerSchedulePage() {
+type ManagerSchedulePageProps = {
+  searchParams?: Promise<{
+    date?: string | string[];
+  }>;
+};
+
+export default async function ManagerSchedulePage({
+  searchParams,
+}: ManagerSchedulePageProps) {
   const session = await requireRole(MANAGER_ROLES);
 
   if (!session.user.primaryGroupId) {
     return null;
   }
 
-  const days = await getWeeklySchedule(session.user.primaryGroupId);
+  const params = (await searchParams) ?? {};
+  const rawDate = typeof params.date === "string" ? params.date : undefined;
+  const selectedDate = parseDateParam(rawDate);
+  const days = await getWeeklySchedule(session.user.primaryGroupId, selectedDate);
 
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
         eyebrow="group manager"
         title="Расписание на неделю"
-        description="Импортированное расписание разложено по учебным дням и готово к использованию."
+        description={`Неделя ${formatWeekRange(selectedDate)}.`}
+        actions={
+          <DateNavigator basePath="/manager/schedule" currentDate={selectedDate} mode="week" />
+        }
       />
-      <div className="grid gap-4">
-        {days.map((day) => (
-          <Card key={day.id} className="border-border/60 shadow-none">
-            <CardHeader>
-              <CardTitle>{formatDayLabel(day.date)}</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-3">
-              {day.lessonPairs.map((pair) => (
-                <div key={pair.id} className="rounded-2xl border border-border/60 p-4">
-                  <div className="font-medium">
-                    {pair.pairNumber}. {pair.subject}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {formatTimeRange(pair.startTime, pair.endTime)} • {pair.teacherName}
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <WeeklyScheduleBoard
+        days={days}
+        emptyMessage="На выбранную неделю пары не найдены."
+      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { addDays, endOfWeek, startOfDay } from "date-fns";
+import { addDays, endOfWeek, startOfDay, startOfWeek } from "date-fns";
 import type { RoleCode } from "@prisma/client";
 
 import { db } from "@/lib/db";
@@ -33,7 +33,7 @@ export async function getGroupById(groupId: string) {
 }
 
 export async function getWeeklySchedule(groupId: string, currentDate = new Date()) {
-  const weekStart = startOfDay(currentDate);
+  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
   const weekEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
 
   return db.lessonDay.findMany({
