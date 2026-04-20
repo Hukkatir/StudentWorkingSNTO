@@ -58,14 +58,35 @@ export async function previewScheduleImport(params: {
   fileName: string;
   mimeType?: string | null;
   rawPayload: string;
+  rawBuffer?: Uint8Array;
   adapterKey?: keyof typeof adapterRegistry;
 }) {
   const adapter = adapterRegistry[params.adapterKey ?? "mock"];
-  const parsed = await adapter.parse({
-    fileName: params.fileName,
-    mimeType: params.mimeType,
-    rawPayload: params.rawPayload,
-  });
+  let parsed: Awaited<ReturnType<typeof adapter.parse>>;
+
+  try {
+    parsed = await adapter.parse({
+      fileName: params.fileName,
+      mimeType: params.mimeType,
+      rawPayload: params.rawPayload,
+      rawBuffer: params.rawBuffer,
+    });
+  } catch (error) {
+    const isPdf =
+      params.mimeType === "application/pdf" || params.fileName.toLowerCase().endsWith(".pdf");
+
+    parsed = {
+      items: [],
+      warnings: [
+        isPdf
+          ? "PDF загружен, но система не смогла распознать в нём структуру расписания. Если это скан или файл с нестандартным текстовым слоем, нужен OCR или экспорт в CSV/Excel."
+          : "Не удалось распознать структуру файла. Попробуйте CSV, JSON или табличный PDF.",
+        error instanceof Error ? error.message : "Импорт завершился с ошибкой разбора.",
+      ],
+      normalizedSourceText: params.rawPayload,
+    };
+  }
+
   const items = await resolvePreviewItems(parsed.items);
 
   const warnings = [
@@ -83,7 +104,7 @@ export async function previewScheduleImport(params: {
       adapterKey: adapter.key,
       sourceFilename: params.fileName,
       sourceMimeType: params.mimeType ?? null,
-      rawPayload: params.rawPayload,
+      rawPayload: parsed.normalizedSourceText ?? params.rawPayload,
       previewData: {
         items,
         warnings,
@@ -94,6 +115,10 @@ export async function previewScheduleImport(params: {
       status: "PREVIEW",
       metadata: {
         adapterLabel: adapter.label,
+        sourceFormat:
+          params.mimeType === "application/pdf" || params.fileName.toLowerCase().endsWith(".pdf")
+            ? "pdf"
+            : "text",
       },
     },
   });

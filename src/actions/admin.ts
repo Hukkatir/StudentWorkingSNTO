@@ -26,12 +26,15 @@ export async function previewScheduleImportAction(formData: FormData) {
     throw new Error("Файл не выбран.");
   }
 
-  const rawPayload = await file.text();
+  const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+  const rawBuffer = new Uint8Array(await file.arrayBuffer());
+  const rawPayload = isPdf ? "" : new TextDecoder().decode(rawBuffer);
   const preview = await previewScheduleImport({
     actorUserId: session.user.id,
     fileName: file.name,
     mimeType: file.type,
     rawPayload,
+    rawBuffer,
     adapterKey: "mock",
   });
 

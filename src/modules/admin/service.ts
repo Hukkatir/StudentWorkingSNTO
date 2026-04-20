@@ -175,6 +175,7 @@ export async function createStudent(actorUserId: string, input: CreateStudentInp
       email: result.user.email,
       login: result.user.login,
       groupId: result.groupId,
+      groupName: result.group.name,
     },
   });
 

@@ -12,12 +12,14 @@ export type ParsedScheduleItem = {
 export type ParsedSchedulePreview = {
   items: ParsedScheduleItem[];
   warnings: string[];
+  normalizedSourceText?: string;
 };
 
 export type ScheduleImportInput = {
   fileName: string;
   mimeType?: string | null;
   rawPayload: string;
+  rawBuffer?: Uint8Array;
 };
 
 export interface ScheduleImportAdapter {

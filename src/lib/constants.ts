@@ -87,7 +87,7 @@ export const SCHEDULE_IMPORT_STATUS_LABELS: Record<ScheduleImportStatus, string>
 };
 
 export const SCHEDULE_ADAPTER_LABELS: Record<string, string> = {
-  mock: "Тестовый",
+  mock: "Файловый импорт",
 };
 
 export const POINT_TRANSACTION_LABELS: Record<PointTransactionType, string> = {
