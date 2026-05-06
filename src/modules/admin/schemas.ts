@@ -26,5 +26,24 @@ export const createStudentSchema = z.object({
   active: z.boolean().default(true),
 });
 
+export const createTeacherSchema = z.object({
+  fullName: z.string().trim().min(3, "Укажите ФИО преподавателя.").max(120),
+  email: z.string().trim().email("Введите корректную почту."),
+  login: z
+    .string()
+    .trim()
+    .min(2, "Укажите логин.")
+    .max(32)
+    .regex(
+      /^[a-z0-9._-]+$/i,
+      "Логин может содержать только латиницу, цифры, точку, дефис и подчёркивание.",
+    ),
+  password: z.string().min(6, "Пароль должен быть не короче 6 символов.").max(64),
+  department: z.string().trim().max(120).optional().or(z.literal("")),
+  title: z.string().trim().max(120).optional().or(z.literal("")),
+  active: z.boolean().default(true),
+});
+
 export type CreateGroupInput = z.infer<typeof createGroupSchema>;
 export type CreateStudentInput = z.infer<typeof createStudentSchema>;
+export type CreateTeacherInput = z.infer<typeof createTeacherSchema>;

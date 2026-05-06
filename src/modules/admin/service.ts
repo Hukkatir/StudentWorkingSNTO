@@ -7,6 +7,7 @@ import { AppError } from "@/lib/errors";
 import type {
   CreateGroupInput,
   CreateStudentInput,
+  CreateTeacherInput,
 } from "@/modules/admin/schemas";
 
 export async function getAdminDashboardData() {
@@ -52,6 +53,21 @@ export async function listAdminStudents() {
       group: true,
     },
     orderBy: [{ group: { name: "asc" } }, { user: { fullName: "asc" } }],
+  });
+}
+
+export async function listAdminTeachers() {
+  return db.teacherProfile.findMany({
+    include: {
+      user: true,
+      _count: {
+        select: {
+          lessonPairs: true,
+          cleaningEvaluations: true,
+        },
+      },
+    },
+    orderBy: [{ user: { fullName: "asc" } }],
   });
 }
 
@@ -176,6 +192,81 @@ export async function createStudent(actorUserId: string, input: CreateStudentInp
       login: result.user.login,
       groupId: result.groupId,
       groupName: result.group.name,
+    },
+  });
+
+  return result;
+}
+
+export async function createTeacher(actorUserId: string, input: CreateTeacherInput) {
+  const normalizedEmail = input.email.trim().toLowerCase();
+  const normalizedLogin = input.login.trim().toLowerCase();
+
+  const [existingEmail, existingLogin, role] = await Promise.all([
+    db.user.findUnique({
+      where: { email: normalizedEmail },
+      select: { id: true },
+    }),
+    db.user.findUnique({
+      where: { login: normalizedLogin },
+      select: { id: true },
+    }),
+    db.role.findUnique({
+      where: { code: "TEACHER" },
+      select: { id: true },
+    }),
+  ]);
+
+  if (existingEmail) {
+    throw new AppError("Пользователь с такой почтой уже существует.");
+  }
+
+  if (existingLogin) {
+    throw new AppError("Пользователь с таким логином уже существует.");
+  }
+
+  if (!role) {
+    throw new AppError("Системная роль преподавателя не найдена.");
+  }
+
+  const passwordHash = await hash(input.password, 10);
+
+  const result = await db.$transaction(async (tx) => {
+    const user = await tx.user.create({
+      data: {
+        fullName: input.fullName.trim(),
+        email: normalizedEmail,
+        login: normalizedLogin,
+        passwordHash,
+        active: input.active,
+        roleId: role.id,
+      },
+    });
+
+    return tx.teacherProfile.create({
+      data: {
+        userId: user.id,
+        department: input.department?.trim() || null,
+        title: input.title?.trim() || null,
+      },
+      include: {
+        user: true,
+      },
+    });
+  });
+
+  await createAuditLog({
+    actorUserId,
+    action: "admin.teacher.created",
+    entityType: "TeacherProfile",
+    entityId: result.id,
+    after: {
+      teacherId: result.id,
+      fullName: result.user.fullName,
+      email: result.user.email,
+      login: result.user.login,
+      department: result.department,
+      title: result.title,
     },
   });
 

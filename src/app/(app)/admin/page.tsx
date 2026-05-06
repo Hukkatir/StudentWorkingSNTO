@@ -39,6 +39,12 @@ export default async function AdminDashboardPage() {
               Новая группа
             </Link>
             <Link
+              href="/admin/teachers"
+              className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl")}
+            >
+              Новый преподаватель
+            </Link>
+            <Link
               href="/admin/students"
               className={cn(buttonVariants({ variant: "default" }), "rounded-2xl")}
             >

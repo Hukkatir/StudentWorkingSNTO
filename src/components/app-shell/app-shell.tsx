@@ -8,6 +8,7 @@ import {
   BarChart3,
   CalendarDays,
   ClipboardList,
+  GraduationCap,
   Home,
   Import,
   LogOut,
@@ -59,6 +60,7 @@ const navMap: Record<Role, NavItem[]> = {
     { href: "/admin", label: "Сводка", icon: ShieldCheck },
     { href: "/admin/groups", label: "Группы", icon: Users },
     { href: "/admin/students", label: "Студенты", icon: UserRound },
+    { href: "/admin/teachers", label: "Преподаватели", icon: GraduationCap },
     { href: "/admin/imports", label: "Импорт", icon: Import },
     { href: "/admin/settings", label: "Правила", icon: Settings2 },
     { href: "/admin/audit", label: "Аудит", icon: ClipboardList },
@@ -92,7 +94,10 @@ export function AppShell({ user, children }: AppShellProps) {
   const pathname = usePathname();
   const navItems = navMap[user.role];
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const mobileNavItems = navItems.slice(0, user.role === "STUDENT" ? 5 : 4);
+  const mobileNavItems = navItems.slice(
+    0,
+    user.role === "STUDENT" ? 5 : user.role === "ADMIN" ? 5 : 4,
+  );
   const activeHref =
     navItems
       .filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))

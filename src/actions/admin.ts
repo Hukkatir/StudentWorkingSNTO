@@ -6,11 +6,13 @@ import { requireRole } from "@/lib/auth/session";
 import {
   createGroup,
   createStudent,
+  createTeacher,
   updateSettings,
 } from "@/modules/admin/service";
 import {
   createGroupSchema,
   createStudentSchema,
+  createTeacherSchema,
 } from "@/modules/admin/schemas";
 import {
   confirmScheduleImport,
@@ -103,5 +105,21 @@ export async function createStudentAction(values: unknown) {
     success: true,
     message: `Студент ${student.user.fullName} добавлен.`,
     studentId: student.id,
+  };
+}
+
+export async function createTeacherAction(values: unknown) {
+  const session = await requireRole(["ADMIN"]);
+  const parsed = createTeacherSchema.parse(values);
+
+  const teacher = await createTeacher(session.user.id, parsed);
+
+  revalidatePath("/admin");
+  revalidatePath("/admin/teachers");
+
+  return {
+    success: true,
+    message: `Преподаватель ${teacher.user.fullName} добавлен.`,
+    teacherId: teacher.id,
   };
 }
