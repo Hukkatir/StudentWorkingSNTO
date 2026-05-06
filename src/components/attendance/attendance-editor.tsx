@@ -1,7 +1,7 @@
 "use client";
 
 import { startTransition, useMemo, useState } from "react";
-import { LoaderCircle, RotateCcw, Save, Users } from "lucide-react";
+import { CheckCheck, Copy, LoaderCircle, RotateCcw, Save, Users, UserX } from "lucide-react";
 import { toast } from "sonner";
 
 import { saveAttendanceAction } from "@/actions/attendance";
@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { formatDayLabel, formatTimeRange } from "@/lib/date";
 
@@ -58,6 +59,7 @@ export function AttendanceEditor({
   students,
 }: AttendanceEditorProps) {
   const [isPending, setIsPending] = useState(false);
+  const [copiedKey, setCopiedKey] = useState<"present" | "absent" | "summary" | null>(null);
   const initialRows = useMemo(
     () =>
       Object.fromEntries(
@@ -79,6 +81,69 @@ export function AttendanceEditor({
     () => new Map(reasons.map((reason) => [reason.id, reason.label])),
     [reasons],
   );
+  const attendanceDigest = useMemo(() => {
+    const presentRows: string[] = [];
+    const absentRows: string[] = [];
+    const lateRows: string[] = [];
+    const excusedRows: string[] = [];
+
+    students.forEach((student) => {
+      const row = rows[student.id];
+      const fullName = student.user.fullName;
+      const reasonLabel = row.reasonId ? reasonLabelMap.get(row.reasonId) : null;
+      const commentSuffix = row.comment ? ` - ${row.comment}` : "";
+
+      if (row.status === "PRESENT") {
+        presentRows.push(fullName);
+        return;
+      }
+
+      if (row.status === "LATE") {
+        presentRows.push(`${fullName} (опоздал)`);
+        lateRows.push(fullName);
+        return;
+      }
+
+      if (row.status === "ABSENT") {
+        absentRows.push(
+          `${fullName}${reasonLabel ? ` (${reasonLabel.toLowerCase()})` : ""}${commentSuffix}`,
+        );
+        return;
+      }
+
+      if (row.status === "EXCUSED") {
+        absentRows.push(
+          `${fullName}${reasonLabel ? ` (${reasonLabel.toLowerCase()})` : " (уважительная причина)"}${commentSuffix}`,
+        );
+        excusedRows.push(fullName);
+      }
+    });
+
+    const summaryLines = [
+      `Пара ${lessonPair.pairNumber}. ${lessonPair.subject}`,
+      `${lessonPair.group.name}, ${formatDayLabel(lessonPair.lessonDay.date)}`,
+      formatTimeRange(lessonPair.startTime, lessonPair.endTime),
+      "",
+      `Были (${presentRows.length}):`,
+      presentRows.length ? presentRows.join("\n") : "Нет отмеченных присутствующих.",
+      "",
+      `Не были (${absentRows.length}):`,
+      absentRows.length ? absentRows.join("\n") : "Нет отсутствующих.",
+      "",
+      `Опоздали: ${lateRows.length || 0}`,
+      `Уважительные: ${excusedRows.length || 0}`,
+    ];
+
+    return {
+      presentText: presentRows.length ? presentRows.join("\n") : "Нет отмеченных присутствующих.",
+      absentText: absentRows.length ? absentRows.join("\n") : "Нет отсутствующих.",
+      summaryText: summaryLines.join("\n"),
+      presentCount: presentRows.length,
+      absentCount: absentRows.length,
+      lateCount: lateRows.length,
+      excusedCount: excusedRows.length,
+    };
+  }, [lessonPair, reasonLabelMap, rows, students]);
 
   const updateRow = (studentId: string, patch: Partial<RowState>) => {
     setRows((current) => ({
@@ -143,6 +208,23 @@ export function AttendanceEditor({
     });
   };
 
+  const copyDigest = async (
+    key: "present" | "absent" | "summary",
+    value: string,
+    successMessage: string,
+  ) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedKey(key);
+      toast.success(successMessage);
+      window.setTimeout(() => {
+        setCopiedKey((current) => (current === key ? null : current));
+      }, 1600);
+    } catch {
+      toast.error("Не удалось скопировать текст.");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <Card className="border-border/60 shadow-none">
@@ -158,18 +240,143 @@ export function AttendanceEditor({
             <span>{formatTimeRange(lessonPair.startTime, lessonPair.endTime)}</span>
           </div>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-2">
-          <Button variant="outline" onClick={setAllPresent}>
+        <CardContent className="grid gap-2 sm:flex sm:flex-wrap">
+          <Button variant="outline" className="w-full sm:w-auto" onClick={setAllPresent}>
             <Users data-icon="inline-start" />
             Все присутствуют
           </Button>
-          <Button variant="outline" onClick={resetRows}>
+          <Button variant="outline" className="w-full sm:w-auto" onClick={resetRows}>
             <RotateCcw data-icon="inline-start" />
             Сбросить отметки
           </Button>
-          <Button variant="outline" onClick={applyPlannedAbsences}>
+          <Button
+            variant="outline"
+            className="w-full sm:w-auto"
+            onClick={applyPlannedAbsences}
+          >
             Применить плановые отсутствия
           </Button>
+        </CardContent>
+      </Card>
+
+      <Card className="border-border/70 bg-[linear-gradient(145deg,rgba(0,136,130,0.1),rgba(20,56,122,0.06))] shadow-none">
+        <CardHeader className="border-b border-border/60">
+          <CardTitle>Списки для копирования</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 p-4 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+          <div className="grid gap-3">
+            <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+              <div className="rounded-2xl border border-border/60 bg-background/85 p-3">
+                <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  Были
+                </div>
+                <div className="mt-2 text-2xl font-semibold">{attendanceDigest.presentCount}</div>
+              </div>
+              <div className="rounded-2xl border border-border/60 bg-background/85 p-3">
+                <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  Не были
+                </div>
+                <div className="mt-2 text-2xl font-semibold">{attendanceDigest.absentCount}</div>
+              </div>
+              <div className="rounded-2xl border border-border/60 bg-background/85 p-3">
+                <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  Опоздали
+                </div>
+                <div className="mt-2 text-2xl font-semibold">{attendanceDigest.lateCount}</div>
+              </div>
+              <div className="rounded-2xl border border-border/60 bg-background/85 p-3">
+                <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  Уважит.
+                </div>
+                <div className="mt-2 text-2xl font-semibold">{attendanceDigest.excusedCount}</div>
+              </div>
+            </div>
+
+            <div className="grid gap-3 lg:grid-cols-2">
+              <div className="rounded-2xl border border-border/60 bg-background/88 p-3">
+                <div className="mb-2 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-2 font-medium">
+                    <CheckCheck className="size-4 text-emerald-600 dark:text-emerald-300" />
+                    Список присутствующих
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="icon-sm"
+                    className="shrink-0"
+                    aria-label="Скопировать список присутствующих"
+                    title="Скопировать список присутствующих"
+                    onClick={() =>
+                      copyDigest(
+                        "present",
+                        attendanceDigest.presentText,
+                        "Список присутствующих скопирован.",
+                      )
+                    }
+                  >
+                    {copiedKey === "present" ? <CheckCheck /> : <Copy />}
+                  </Button>
+                </div>
+                <Textarea
+                  readOnly
+                  value={attendanceDigest.presentText}
+                  className="min-h-36 resize-none rounded-2xl bg-background/70 text-sm sm:min-h-44"
+                />
+              </div>
+
+              <div className="rounded-2xl border border-border/60 bg-background/88 p-3">
+                <div className="mb-2 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-2 font-medium">
+                    <UserX className="size-4 text-rose-600 dark:text-rose-300" />
+                    Список отсутствующих
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="icon-sm"
+                    className="shrink-0"
+                    aria-label="Скопировать список отсутствующих"
+                    title="Скопировать список отсутствующих"
+                    onClick={() =>
+                      copyDigest(
+                        "absent",
+                        attendanceDigest.absentText,
+                        "Список отсутствующих скопирован.",
+                      )
+                    }
+                  >
+                    {copiedKey === "absent" ? <CheckCheck /> : <Copy />}
+                  </Button>
+                </div>
+                <Textarea
+                  readOnly
+                  value={attendanceDigest.absentText}
+                  className="min-h-36 resize-none rounded-2xl bg-background/70 text-sm sm:min-h-44"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-border/60 bg-background/88 p-3">
+            <div className="mb-2 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div className="font-medium">Готовый сводный текст</div>
+              <Button
+                variant="outline"
+                size="icon-sm"
+                className="shrink-0"
+                aria-label="Скопировать сводный текст"
+                title="Скопировать сводный текст"
+                onClick={() =>
+                  copyDigest("summary", attendanceDigest.summaryText, "Сводка скопирована.")
+                }
+              >
+                {copiedKey === "summary" ? <CheckCheck /> : <Copy />}
+              </Button>
+            </div>
+            <Textarea
+              readOnly
+              value={attendanceDigest.summaryText}
+              className="min-h-[18rem] resize-none rounded-2xl bg-background/70 text-sm sm:min-h-[24rem]"
+            />
+          </div>
         </CardContent>
       </Card>
 
@@ -208,7 +415,7 @@ export function AttendanceEditor({
                       });
                     }
                   }}
-                  className="grid w-full grid-cols-4 gap-2"
+                  className="grid w-full grid-cols-2 gap-2 sm:grid-cols-4"
                 >
                   <ToggleGroupItem value="PRESENT" className="w-full justify-center">
                     Был

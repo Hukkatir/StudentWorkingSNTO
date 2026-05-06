@@ -1,25 +1,33 @@
+import Link from "next/link";
+
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDayLabel, formatTimeRange } from "@/lib/date";
+import { cn } from "@/lib/utils";
 
 type WeeklyScheduleBoardProps = {
   days: Array<{
     id: string;
     date: Date;
-    lessonPairs: Array<{
-      id: string;
-      pairNumber: number;
+      lessonPairs: Array<{
+        id: string;
+        pairNumber: number;
       subject: string;
       startTime: string;
       endTime: string;
       teacherName: string | null;
+      }>;
     }>;
-  }>;
   emptyMessage: string;
+  getPairHref?: (pairId: string) => string;
+  pairActionLabel?: string;
 };
 
 export function WeeklyScheduleBoard({
   days,
   emptyMessage,
+  getPairHref,
+  pairActionLabel = "Открыть",
 }: WeeklyScheduleBoardProps) {
   if (!days.length) {
     return (
@@ -62,8 +70,21 @@ export function WeeklyScheduleBoard({
                       {formatTimeRange(pair.startTime, pair.endTime)}
                     </div>
                   </div>
-                  <div className="text-sm text-muted-foreground sm:text-right">
-                    {pair.teacherName ?? "Преподаватель не указан"}
+                  <div className="flex flex-col items-start gap-3 sm:items-end">
+                    <div className="text-sm text-muted-foreground sm:text-right">
+                      {pair.teacherName ?? "Преподаватель не указан"}
+                    </div>
+                    {getPairHref ? (
+                      <Link
+                        href={getPairHref(pair.id)}
+                        className={cn(
+                          buttonVariants({ size: "sm", variant: "outline" }),
+                          "w-full rounded-2xl sm:w-auto",
+                        )}
+                      >
+                        {pairActionLabel}
+                      </Link>
+                    ) : null}
                   </div>
                 </div>
               ))

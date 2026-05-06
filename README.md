@@ -76,6 +76,30 @@ npm run dev
 http://localhost:3000
 ```
 
+## Локальный запуск со встроенной БД
+
+Если не хотите отдельно поднимать PostgreSQL, можно запускать проект прямо из папки `StudentWorking`:
+
+```bash
+npm start
+```
+
+Что делает команда:
+
+- поднимает локальную PostgreSQL на `localhost:5433`
+- при необходимости заново инициализирует `.local-postgres`
+- применяет Prisma-схему
+- при пустой базе загружает демо-данные
+- запускает приложение
+
+Дополнительные команды:
+
+```bash
+npm run dev:local
+npm run build:local
+npm run db:prepare-local
+```
+
 ## Railway
 
 Проект готов к Node.js deployment на Railway:

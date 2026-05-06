@@ -39,6 +39,8 @@ export default async function ManagerSchedulePage({
       <WeeklyScheduleBoard
         days={days}
         emptyMessage="На выбранную неделю пары не найдены."
+        getPairHref={(pairId) => `/manager/attendance/${pairId}`}
+        pairActionLabel="Открыть"
       />
     </div>
   );

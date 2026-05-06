@@ -36,6 +36,32 @@ function normalizeDate(value: string) {
   return startOfDay(new Date(value));
 }
 
+async function resolveTeacherMapByName(
+  teacherNames: string[],
+  tx: Pick<typeof db, "teacherProfile"> = db,
+) {
+  const uniqueTeacherNames = [...new Set(teacherNames.map((name) => name.trim()).filter(Boolean))];
+
+  if (!uniqueTeacherNames.length) {
+    return new Map<string, string>();
+  }
+
+  const teacherProfiles = await tx.teacherProfile.findMany({
+    where: {
+      user: {
+        fullName: {
+          in: uniqueTeacherNames,
+        },
+      },
+    },
+    include: {
+      user: true,
+    },
+  });
+
+  return new Map(teacherProfiles.map((profile) => [profile.user.fullName.trim(), profile.id]));
+}
+
 async function resolvePreviewItems(items: ParsedScheduleItem[]) {
   const groups = await db.group.findMany({
     where: {
@@ -88,6 +114,7 @@ export async function previewScheduleImport(params: {
   }
 
   const items = await resolvePreviewItems(parsed.items);
+  const teacherMap = await resolveTeacherMapByName(items.map((item) => item.teacherName));
 
   const warnings = [
     ...parsed.warnings,
@@ -96,6 +123,12 @@ export async function previewScheduleImport(params: {
       .map(
         (item) =>
           `Группа "${item.groupName}" не найдена в справочнике и будет пропущена при подтверждении.`,
+      ),
+    ...[...new Set(items.map((item) => item.teacherName.trim()).filter(Boolean))]
+      .filter((teacherName) => !teacherMap.has(teacherName))
+      .map(
+        (teacherName) =>
+          `Преподаватель "${teacherName}" не найден в системе. Пара импортируется, но в кабинет преподавателя автоматически не привяжется.`,
       ),
   ];
 
@@ -159,7 +192,13 @@ export async function confirmScheduleImport(importId: string, actorUserId: strin
   const validItems = previewData.items.filter((item) => item.groupId);
 
   await db.$transaction(async (transaction) => {
+    const teacherMap = await resolveTeacherMapByName(
+      validItems.map((item) => item.teacherName),
+      transaction,
+    );
+
     for (const item of validItems) {
+      const teacherId = teacherMap.get(item.teacherName.trim()) ?? null;
       const existingScheduleItem = await transaction.scheduleItem.findFirst({
         where: {
           groupId: item.groupId!,
@@ -174,6 +213,7 @@ export async function confirmScheduleImport(importId: string, actorUserId: strin
             data: {
               subject: item.subject,
               teacherName: item.teacherName,
+              teacherId,
               room: item.room,
               startTime: item.startTime,
               endTime: item.endTime,
@@ -187,6 +227,7 @@ export async function confirmScheduleImport(importId: string, actorUserId: strin
               pairNumber: item.pairNumber,
               subject: item.subject,
               teacherName: item.teacherName,
+              teacherId,
               room: item.room,
               startTime: item.startTime,
               endTime: item.endTime,
@@ -222,6 +263,7 @@ export async function confirmScheduleImport(importId: string, actorUserId: strin
             scheduleItemId: scheduleItem.id,
             subject: item.subject,
             teacherName: item.teacherName,
+            teacherId,
             room: item.room,
             startTime: item.startTime,
             endTime: item.endTime,
@@ -236,6 +278,7 @@ export async function confirmScheduleImport(importId: string, actorUserId: strin
             pairNumber: item.pairNumber,
             subject: item.subject,
             teacherName: item.teacherName,
+            teacherId,
             room: item.room,
             startTime: item.startTime,
             endTime: item.endTime,

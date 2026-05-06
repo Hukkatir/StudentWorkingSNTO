@@ -33,17 +33,50 @@ const STRUCTURED_HEADER_ALIASES: Record<StructuredField, string[]> = {
   timeRange: ["time", "timerange", "время", "интервал"],
 };
 
+function parseDelimitedLine(line: string, delimiter: string) {
+  const cells: string[] = [];
+  let current = "";
+  let inQuotes = false;
+
+  for (let index = 0; index < line.length; index += 1) {
+    const char = line[index];
+    const next = line[index + 1];
+
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        current += '"';
+        index += 1;
+        continue;
+      }
+
+      inQuotes = !inQuotes;
+      continue;
+    }
+
+    if (char === delimiter && !inQuotes) {
+      cells.push(current.trim());
+      current = "";
+      continue;
+    }
+
+    current += char;
+  }
+
+  cells.push(current.trim());
+  return cells;
+}
+
 function parseCsv(rawPayload: string): ParsedScheduleItem[] {
-  const [headerLine, ...lines] = rawPayload
+  const normalizedPayload = rawPayload.replace(/^\uFEFF/, "");
+  const [headerLine, ...lines] = normalizedPayload
     .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
+    .filter((line) => line.trim().length > 0);
 
   const delimiter = headerLine.includes(";") ? ";" : ",";
-  const headers = headerLine.split(delimiter).map((item) => item.trim());
+  const headers = parseDelimitedLine(headerLine, delimiter);
 
   return lines.map((line) => {
-    const values = line.split(delimiter).map((item) => item.trim());
+    const values = parseDelimitedLine(line, delimiter);
     const row = headers.reduce<Record<string, string>>((accumulator, header, index) => {
       accumulator[header] = values[index] ?? "";
       return accumulator;
@@ -475,6 +508,10 @@ export const mockScheduleImportAdapter: ScheduleImportAdapter = {
     const warnings: string[] = [];
     const isPdf =
       input.mimeType === "application/pdf" || input.fileName.toLowerCase().endsWith(".pdf");
+    const isJson =
+      input.mimeType?.includes("json") || input.fileName.toLowerCase().endsWith(".json");
+    const isCsv =
+      input.mimeType?.includes("csv") || input.fileName.toLowerCase().endsWith(".csv");
     const normalizedSourceText = isPdf ? extractPdfText(input) : input.rawPayload;
 
     if (isPdf) {
@@ -483,26 +520,50 @@ export const mockScheduleImportAdapter: ScheduleImportAdapter = {
       );
     }
 
-    try {
-      return {
-        items: parseJson(normalizedSourceText),
-        warnings,
-        normalizedSourceText,
-      };
-    } catch {}
+    if (isJson) {
+      try {
+        return {
+          items: parseJson(normalizedSourceText),
+          warnings,
+          normalizedSourceText,
+        };
+      } catch {}
+    }
 
-    try {
-      return {
-        items: parseCsv(normalizedSourceText),
-        warnings: [
-          ...warnings,
-          isPdf
-            ? "PDF прочитан через текстовый слой. Перед подтверждением проверьте предметы, даты и время."
-            : "JSON не распознан, поэтому файл обработан как CSV.",
-        ],
-        normalizedSourceText,
-      };
-    } catch {}
+    if (isCsv) {
+      try {
+        return {
+          items: parseCsv(normalizedSourceText),
+          warnings,
+          normalizedSourceText,
+        };
+      } catch {}
+    }
+
+    if (!isJson) {
+      try {
+        return {
+          items: parseJson(normalizedSourceText),
+          warnings,
+          normalizedSourceText,
+        };
+      } catch {}
+    }
+
+    if (!isCsv) {
+      try {
+        return {
+          items: parseCsv(normalizedSourceText),
+          warnings: [
+            ...warnings,
+            isPdf
+              ? "PDF прочитан через текстовый слой. Перед подтверждением проверьте предметы, даты и время."
+              : "Файл обработан как CSV по табличной структуре.",
+          ],
+          normalizedSourceText,
+        };
+      } catch {}
+    }
 
     return {
       items: parseStructuredText(normalizedSourceText),

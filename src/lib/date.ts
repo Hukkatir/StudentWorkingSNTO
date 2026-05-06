@@ -1,16 +1,22 @@
 import { endOfWeek, format, isValid, parseISO, startOfDay, startOfWeek } from "date-fns";
 import { ru } from "date-fns/locale";
 
+const SHORT_WEEKDAY_LABELS = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"] as const;
+
 export function formatDayLabel(value: Date | string) {
   return format(new Date(value), "d MMMM, EEEE", { locale: ru });
 }
 
 export function formatCompactDayLabel(value: Date | string) {
-  return format(new Date(value), "d MMM, EEE", { locale: ru });
+  return `${format(new Date(value), "d MMM", { locale: ru })}, ${formatShortWeekday(value)}`;
 }
 
 export function formatWeekday(value: Date | string) {
   return format(new Date(value), "EEEE", { locale: ru });
+}
+
+export function formatShortWeekday(value: Date | string) {
+  return SHORT_WEEKDAY_LABELS[new Date(value).getDay()] ?? "";
 }
 
 export function formatShortDate(value: Date | string) {
