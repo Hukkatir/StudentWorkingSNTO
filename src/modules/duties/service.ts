@@ -1042,7 +1042,10 @@ export async function getTeacherAssignmentsForDay(
   });
 
   const groupIds = [...new Set(taughtPairs.map((pair) => pair.groupId))];
-  const pairIds = taughtPairs.map((pair) => pair.id);
+
+  if (!groupIds.length) {
+    return [];
+  }
 
   return db.dutyAssignment.findMany({
     where: {
@@ -1050,19 +1053,9 @@ export async function getTeacherAssignmentsForDay(
         gte: dayStart,
         lt: nextDay,
       },
-      OR: [
-        {
-          relatedLessonPairId: {
-            in: pairIds,
-          },
-        },
-        {
-          relatedLessonPairId: null,
-          groupId: {
-            in: groupIds,
-          },
-        },
-      ],
+      groupId: {
+        in: groupIds,
+      },
     },
     include: {
       assignedStudent: {

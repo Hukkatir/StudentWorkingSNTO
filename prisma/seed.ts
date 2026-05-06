@@ -284,6 +284,57 @@ async function main() {
     },
   });
 
+  await Promise.all(
+    [
+      {
+        fullName: "Антон Беляев",
+        email: "teacher3@example.com",
+        login: "teacher3",
+        department: "Разработка ПО",
+        title: "преподаватель",
+      },
+      {
+        fullName: "Елена Соколова",
+        email: "teacher4@example.com",
+        login: "teacher4",
+        department: "Математическое моделирование",
+        title: "преподаватель",
+      },
+      {
+        fullName: "Марина Власова",
+        email: "teacher5@example.com",
+        login: "teacher5",
+        department: "Информационная безопасность",
+        title: "преподаватель",
+      },
+      {
+        fullName: "Дмитрий Кравченко",
+        email: "teacher6@example.com",
+        login: "teacher6",
+        department: "Базы данных",
+        title: "преподаватель",
+      },
+    ].map(async (teacher) => {
+      const user = await prisma.user.create({
+        data: {
+          fullName: teacher.fullName,
+          email: teacher.email,
+          login: teacher.login,
+          passwordHash: password,
+          roleId: roleMap.get("TEACHER")!,
+        },
+      });
+
+      await prisma.teacherProfile.create({
+        data: {
+          userId: user.id,
+          department: teacher.department,
+          title: teacher.title,
+        },
+      });
+    }),
+  );
+
   await prisma.groupMembership.createMany({
     data: [
       {
