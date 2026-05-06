@@ -81,7 +81,7 @@ http://localhost:3000
 Если не хотите отдельно поднимать PostgreSQL, можно запускать проект прямо из папки `StudentWorking`:
 
 ```bash
-npm start
+npm run start:local
 ```
 
 Что делает команда:
@@ -95,6 +95,7 @@ npm start
 Дополнительные команды:
 
 ```bash
+npm run start:local
 npm run dev:local
 npm run build:local
 npm run db:prepare-local

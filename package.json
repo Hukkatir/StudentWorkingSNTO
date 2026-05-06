@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
-    "start": "node ../scripts/run-studentworking-with-db.mjs dev",
+    "start": "node scripts/railway-start.mjs",
     "start:prod": "node scripts/railway-start.mjs",
     "dev:app": "next dev --webpack",
     "build:app": "next build --webpack",
     "start:app": "next start",
+    "start:local": "node ../scripts/run-studentworking-with-db.mjs dev",
     "dev:local": "node ../scripts/run-studentworking-with-db.mjs dev",
     "build:local": "node ../scripts/run-studentworking-with-db.mjs build",
     "db:prepare-local": "node ../scripts/run-studentworking-with-db.mjs prepare",
